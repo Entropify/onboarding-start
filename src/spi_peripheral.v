@@ -58,7 +58,7 @@ assign ncs_posedge = ncs_post_2ff & ~ncs_last;
 
 assign ncs_negedge = ~ncs_post_2ff & ncs_last;
 
-always @(posedge clk) begin
+always @(posedge clk, negedge rst_n) begin
     
 
     if (~rst_n) begin

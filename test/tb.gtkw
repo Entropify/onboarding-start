@@ -1,21 +1,24 @@
 [*]
 [*] GTKWave Analyzer v3.3.126 (w)1999-2026 BSI
-[*] Sat Jun 20 06:32:54 2026
+[*] Mon Jun 22 00:21:02 2026
 [*]
 [dumpfile] "/mnt/x/uwasic/onboarding-start/test/tb.vcd"
-[dumpfile_mtime] "Sat Jun 20 06:30:52 2026"
-[dumpfile_size] 19394578
+[dumpfile_mtime] "Sun Jun 21 21:02:31 2026"
+[dumpfile_size] 13833641
 [savefile] "/mnt/x/uwasic/onboarding-start/test/tb.gtkw"
-[timestart] 4261900000
-[size] 2046 925
-[pos] -1 -1
-*-27.234533 4877500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 0
+[size] 2560 1333
+[pos] -27 -24
+*-27.634533 204000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
+[treeopen] tb.user_project.
+[treeopen] tb.user_project.spi_peripheral_inst.
 [sst_width] 297
 [signals_width] 230
 [sst_expanded] 1
-[sst_vpaned_height] 272
+[sst_vpaned_height] 415
 @28
+tb.user_project.spi_peripheral_inst.rst_n
 tb.user_project.spi_peripheral_inst.ncs
 tb.user_project.spi_peripheral_inst.clk
 tb.user_project.spi_peripheral_inst.copi
@@ -23,14 +26,15 @@ tb.user_project.spi_peripheral_inst.ncs_post_2ff
 tb.user_project.spi_peripheral_inst.sclk_post_2ff
 tb.user_project.spi_peripheral_inst.copi_post_2ff
 tb.user_project.spi_peripheral_inst.ncs_posedge
+tb.user_project.spi_peripheral_inst.ncs_negedge
 tb.user_project.spi_peripheral_inst.sclk_posedge
 @22
-tb.user_project.spi_peripheral_inst.bit_counter[3:0]
+tb.user_project.spi_peripheral_inst.bit_counter[4:0]
 tb.user_project.spi_peripheral_inst.copi_received[15:0]
 tb.user_project.uo_out[7:0]
-@23
 tb.ui_in[7:0]
-@22
 tb.user_project.uio_out[7:0]
+@28
+tb.user_project.pwm_peripheral_inst.pwm_signal
 [pattern_trace] 1
 [pattern_trace] 0
