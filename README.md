@@ -305,7 +305,7 @@ The simulation environment runs Python 3.14. Cocotb 2.x introduced breaking chan
 
 | Tool | Version / Details |
 |------|-------------------|
-|Hardware Description Language | Verilog |
+|Hardware description language | Verilog |
 | Verilog simulator | Icarus Verilog |
 | Testbench framework | cocotb 1.9.2 |
 | Python | 3.14 (WSL Ubuntu) |
