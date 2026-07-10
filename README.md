@@ -40,7 +40,7 @@ I gained a lot of insights into communication protocols, signal management and m
 
 ---
 
-## Peripheral Chip Architecture
+## Peripheral Chip Microarchitecture
 
 This diagram shows the entire peripheral chip and how it is emcompassed in the testbenching workflow using Cocotb and Icarus Verilog:
 
