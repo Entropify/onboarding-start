@@ -25,11 +25,17 @@ wire sclk_post_2ff, copi_post_2ff, ncs_post_2ff;
 
 reg sclk_last, ncs_last;
 
+reg [1:0] sclk_sync;
+reg [1:0] copi_sync;
+reg [1:0] ncs_sync;
+
 wire sclk_posedge, ncs_posedge, ncs_negedge;
 
 reg [15:0] copi_received;
 
 reg [4:0] bit_counter;
+
+/*
 
 sync_2ff sclk_2ff (
     .in(sclk),
@@ -52,6 +58,14 @@ sync_2ff ncs_2ff (
     .rst_n(rst_n)
 );
 
+*/
+
+assign sclk_post_2ff = sclk_sync[1];
+
+assign copi_post_2ff = copi_sync[1];
+
+assign ncs_post_2ff  = ncs_sync[1];
+
 assign sclk_posedge = sclk_post_2ff & ~sclk_last;
 
 assign ncs_posedge = ncs_post_2ff & ~ncs_last;
@@ -65,48 +79,57 @@ always @(posedge clk, negedge rst_n) begin
         sclk_last <= 1'b0;
         ncs_last <= 1'b0;
         copi_received <= 16'b0;
-        bit_counter <= 4'b0;
+        bit_counter <= 5'b0;
         en_reg_out_7_0 <= 8'b0;
         en_reg_out_15_8 <= 8'b0;
         en_reg_pwm_7_0 <= 8'b0;
         en_reg_pwm_15_8 <= 8'b0;
         pwm_duty_cycle <= 8'b0;
+
+        sclk_sync <= 2'b0;
+        copi_sync <= 2'b0;
+        ncs_sync  <= 2'b0;
     end
 
     else begin
 
-    sclk_last <= sclk_post_2ff;
-    ncs_last <= ncs_post_2ff;
+        sclk_sync <= {sclk_sync[0], sclk};
+        copi_sync <= {copi_sync[0], copi};
+        ncs_sync  <= {ncs_sync[0], ncs};
 
-    if (ncs_negedge) begin
-        bit_counter <= 4'b0;
-    end
+        sclk_last <= sclk_post_2ff;
+        ncs_last <= ncs_post_2ff;
 
-    if (sclk_posedge && !ncs_post_2ff && !ncs_negedge) begin
-        bit_counter <= bit_counter + 1;
-        copi_received <= {copi_received[14:0], copi_post_2ff};
-    end
-
-    if (ncs_posedge && bit_counter == 16 ) begin
-
-        if (copi_received[15] == 1) begin
-
-            if (copi_received[14:8] <= max_address) begin
-
-                case (copi_received[14:8])
-                7'd0: en_reg_out_7_0 <= copi_received[7:0];
-                7'd1: en_reg_out_15_8 <= copi_received[7:0];
-                7'd2: en_reg_pwm_7_0 <= copi_received[7:0];
-                7'd3: en_reg_pwm_15_8 <= copi_received[7:0];
-                7'd4: pwm_duty_cycle <= copi_received[7:0];
-                endcase
-
-            end
-            
+        if (ncs_negedge) begin
+            bit_counter <= 5'b0;
         end
 
-        bit_counter <= 4'b0;
-    end
+        if (sclk_posedge && !ncs_post_2ff && !ncs_negedge) begin
+            bit_counter <= bit_counter + 1;
+            copi_received <= {copi_received[14:0], copi_post_2ff};
+        end
+
+        if (ncs_posedge && bit_counter == 16 ) begin
+
+            if (copi_received[15] == 1) begin
+
+                if (copi_received[14:8] <= max_address) begin
+
+                    case (copi_received[14:8])
+                    7'd0: en_reg_out_7_0 <= copi_received[7:0];
+                    7'd1: en_reg_out_15_8 <= copi_received[7:0];
+                    7'd2: en_reg_pwm_7_0 <= copi_received[7:0];
+                    7'd3: en_reg_pwm_15_8 <= copi_received[7:0];
+                    7'd4: pwm_duty_cycle <= copi_received[7:0];
+                    default: ;
+                    endcase
+
+                end
+                
+            end
+
+            bit_counter <= 5'b0;
+        end
 
 end
 
@@ -116,6 +139,7 @@ end
 
 endmodule
 
+/*
 
 module sync_2ff (
     input wire in,
@@ -127,7 +151,7 @@ module sync_2ff (
 reg ff1;
 reg ff2;
 
-always @(posedge clk) begin
+always @(posedge clk or negedge rst_n) begin
 
     if (~rst_n) begin
         ff1 <= 1'b0;
@@ -145,3 +169,4 @@ assign out = ff2;
 
 
 endmodule
+*/
